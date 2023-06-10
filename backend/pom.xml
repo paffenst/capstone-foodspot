@@ -9,11 +9,13 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>de.neuefische</groupId>
-	<artifactId>backend</artifactId>
+	<artifactId>capstone-foodspot-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>backend</name>
-	<description>backend</description>
+	<name>capstone-foodspot-backend</name>
+	<description>capstone-foodspot-backend</description>
 	<properties>
+		<sonar.organization>paffen</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
