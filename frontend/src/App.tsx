@@ -1,10 +1,12 @@
 import React from 'react';
-import './App.css';
+import useAccessToken from "./hooks/useAccessToken";
+import HomePage from "./components/HomePage";
 
-function App() {
-  return (
-      <div></div>
-  );
+export default function App() {
+    const {token} = useAccessToken()
+    return (
+        <h4>
+            <HomePage token={token}/>
+        </h4>
+    )
 }
-
-export default App;
