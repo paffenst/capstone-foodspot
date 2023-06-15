@@ -13,7 +13,7 @@ export default function Map(props: MapProps) {
     const map = useRef<mapboxgl.Map>();
     const [longitude, setLongitude] = useState(10.4515);
     const [latitude, setLatitude] = useState(51.1657);
-    const [zoom, setZoom] = useState(4.5);
+    const [zoom, setZoom] = useState(5.2);
 
     useEffect(() => {
         if (props.token === "") return;
@@ -26,6 +26,11 @@ export default function Map(props: MapProps) {
             zoom: zoom,
             minZoom: 3
         });
+        map.current?.addControl(new mapboxgl.GeolocateControl({
+            positionOptions:{
+                enableHighAccuracy:true,
+            }
+        }))
     });
 
     useEffect(() => {
@@ -40,8 +45,8 @@ export default function Map(props: MapProps) {
     });
     return (
         <div>
-            <Box style={{width: '100vh', height: '60vh', display: 'flex', flexDirection: 'column'}}>
-                <Box ref={mapContainer} flex={1}/>
+            <Box style={{width: '120vh', height: '90vh', display: 'flex', flexDirection: 'column'}}>
+                <Box style={{margin:'5px'}}  ref={mapContainer} flex={1}/>
             </Box>
         </div>
     )

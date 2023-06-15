@@ -8,8 +8,7 @@ type HomepageProps = {
 export default function HomePage(props: HomepageProps) {
     return (
         <div>
-            <> Food Spot App </>
-            <Box>
+            <Box >
                 <Map token={props.token}/>
             </Box>
         </div>
