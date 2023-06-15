@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("api/mapbox")
 public class FoodMapController {
-
     private final MapService mapService;
 
     public FoodMapController(MapService mapService) {
