@@ -6,9 +6,11 @@ import de.neuefische.backend.models.UserDTO;
 import de.neuefische.backend.models.UserNoAuth;
 import de.neuefische.backend.repos.UserRepo;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.annotation.DirtiesContext;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 class MongoUserServiceTest {
@@ -21,7 +23,13 @@ class MongoUserServiceTest {
 
     @Test
     void loadUserByUsername_expect_MyUsernameNotFoundException() {
+        String username = "NoSuchUser";
+
         when(userRepo.findByUsername("paff")).thenThrow(new UserNotFoundException());
+
+        assertThrows(UsernameNotFoundException.class, () -> {
+            mongoService.loadUserByUsername(username);
+        });
     }
 
     @DirtiesContext

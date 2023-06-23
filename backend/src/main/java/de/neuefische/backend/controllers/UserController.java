@@ -23,7 +23,6 @@ public class UserController {
 
     @PostMapping("/login")
     public String login() {
-        System.out.println(SecurityContextHolder.getContext());
         return SecurityContextHolder
                 .getContext()
                 .getAuthentication()

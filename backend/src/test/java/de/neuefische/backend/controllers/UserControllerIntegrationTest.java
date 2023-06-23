@@ -61,4 +61,25 @@ class UserControllerIntegrationTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("test"));
     }
+
+    @Test
+    @DirtiesContext
+    @WithMockUser()
+    void userLogin_returnStatus200() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(
+                                """
+                                        {
+                                        "username": "Test",
+                                        "password": "Test123"
+                                        }
+                                        """
+                        ).with(csrf()))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/login")
+                        .with(csrf()))
+                .andExpect(status().isOk());
+    }
 }
