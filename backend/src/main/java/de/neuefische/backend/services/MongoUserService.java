@@ -2,16 +2,13 @@ package de.neuefische.backend.services;
 
 import de.neuefische.backend.models.MongoUser;
 import de.neuefische.backend.models.UserDTO;
-import de.neuefische.backend.models.UserNoAuth;
 import de.neuefische.backend.repos.UserRepo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -29,21 +26,12 @@ public class MongoUserService implements UserDetailsService {
         return new User(mongoUser.getUsername(), mongoUser.getPassword(), List.of());
     }
 
-
-    public UserNoAuth registerUser(UserDTO newAuthUser) {
+    public UserDTO registerUser(MongoUser newUser) {
         String uuid = idService.generateId();
-        String cryptedPassword = cryptEncoderService.encodedPassword(newAuthUser);
-        MongoUser newUser = new MongoUser(uuid, newAuthUser.getUsername(), newAuthUser.getEmail(), cryptedPassword, newAuthUser.getFirstname(), newAuthUser.getLastname());
-        userRepo.save(newUser);
-        return new UserNoAuth(newAuthUser.getUsername(), newAuthUser.getEmail(), newAuthUser.getFirstname(), newAuthUser.getLastname());
-    }
+        String cryptedPassword = cryptEncoderService.encodedPassword(newUser);
 
-    @PostMapping("/login")
-    public String login() {
-        return SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getName();
+        MongoUser mongoUser = new MongoUser(uuid, newUser.getUsername(), newUser.getEmail(), cryptedPassword, newUser.getFirstname(), newUser.getLastname(), newUser.getCreatedFoodSpots());
+        userRepo.save(mongoUser);
+        return new UserDTO(newUser.getId(), newUser.getUsername(), newUser.getEmail(), newUser.getFirstname(), newUser.getLastname());
     }
-
 }

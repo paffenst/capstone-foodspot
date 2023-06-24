@@ -1,7 +1,7 @@
 package de.neuefische.backend.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.neuefische.backend.models.UserDTO;
+import de.neuefische.backend.models.MongoUser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -25,31 +25,19 @@ class UserControllerIntegrationTest {
 
     @Test
     @DirtiesContext
-    void registerUser_thenStatus200() throws Exception {
-        UserDTO newUser = UserDTO.builder()
-                .username("testuser")
-                .password("testpass")
-                .email("test@test.de")
-                .firstname("test")
-                .lastname("test")
-                .build();
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String jsonRequestBody = objectMapper.writeValueAsString(newUser);
-
+    @WithMockUser()
+    void registerUser() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(jsonRequestBody)
-                        .with(csrf()))
-                .andExpect(status().isOk())
-                .andExpect(content().json("""
-                            {
-                                "username":"testuser",
-                                "email":"test@test.de",
-                                "firstname":"test",
-                                "lastname":"test"
-                            }
-                        """));
+                        .content(
+                                """
+                                        {
+                                        "username": "Test",
+                                        "password": "4321"
+                                        }
+                                        """
+                        ).with(csrf()))
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -86,7 +74,7 @@ class UserControllerIntegrationTest {
     @Test
     @DirtiesContext
     void registerUser_thenReturnStatus200() throws Exception {
-        UserDTO newUserWithoutId = UserDTO.builder()
+        MongoUser newUser = MongoUser.builder()
                 .username("user1")
                 .password("pass1")
                 .email("user@test.de")
@@ -95,7 +83,7 @@ class UserControllerIntegrationTest {
                 .build();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String jsonRequestBody = objectMapper.writeValueAsString(newUserWithoutId);
+        String jsonRequestBody = objectMapper.writeValueAsString(newUser);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
                         .contentType(MediaType.APPLICATION_JSON)

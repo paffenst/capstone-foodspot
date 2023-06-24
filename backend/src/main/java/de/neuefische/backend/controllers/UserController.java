@@ -1,7 +1,7 @@
 package de.neuefische.backend.controllers;
 
+import de.neuefische.backend.models.MongoUser;
 import de.neuefische.backend.models.UserDTO;
-import de.neuefische.backend.models.UserNoAuth;
 import de.neuefische.backend.services.MongoUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +17,7 @@ public class UserController {
     private final MongoUserService userService;
 
     @PostMapping("/register")
-    public UserNoAuth registerUser(@RequestBody UserDTO newUser) {
+    public UserDTO registerUser(@RequestBody MongoUser newUser) {
         return userService.registerUser(newUser);
     }
 
