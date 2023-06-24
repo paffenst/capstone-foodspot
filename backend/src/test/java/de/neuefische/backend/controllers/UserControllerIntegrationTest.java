@@ -82,4 +82,33 @@ class UserControllerIntegrationTest {
                         .with(csrf()))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    @DirtiesContext
+    void registerUser_thenReturnStatus200() throws Exception {
+        UserDTO newUserWithoutId = UserDTO.builder()
+                .username("user1")
+                .password("pass1")
+                .email("user@test.de")
+                .firstname("firstnametest")
+                .lastname("lastnametest")
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonRequestBody = objectMapper.writeValueAsString(newUserWithoutId);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequestBody)
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                            {
+                                "username":"user1",
+                                "email":"user@test.de",
+                                "firstname":"firstnametest",
+                                "lastname": "lastnametest"
+                            }
+                        """));
+    }
 }
