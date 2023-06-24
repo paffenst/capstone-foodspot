@@ -3,7 +3,7 @@ import {ChangeEvent} from "react";
 import useRegister from "../../hooks/useRegister";
 
 export default function RegisterPage() {
-    const {addUser, inputTextFields, handleInputChange, registerInputHandler, passError, emailError} = useRegister();
+    const {inputTextFields, handleInputChange, registerInputHandler, passError, emailError} = useRegister();
     return (
         <>
             <Box sx={{textAlign: "center"}}>
