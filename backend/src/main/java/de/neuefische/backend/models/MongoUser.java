@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document("users")
 @Builder
-public class User {
+public class MongoUser {
 
     private String id;
     private String username;

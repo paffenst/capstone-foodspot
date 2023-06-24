@@ -1,7 +1,7 @@
 package de.neuefische.backend.services;
 
 import de.neuefische.backend.exceptions.UserNotFoundException;
-import de.neuefische.backend.models.User;
+import de.neuefische.backend.models.MongoUser;
 import de.neuefische.backend.models.UserDTO;
 import de.neuefische.backend.models.UserNoAuth;
 import de.neuefische.backend.repos.UserRepo;
@@ -25,7 +25,7 @@ class MongoUserServiceTest {
     void loadUserByUsername_expect_MyUsernameNotFoundException() {
         String username = "NoSuchUser";
 
-        when(userRepo.findByUsername("paff")).thenThrow(new UserNotFoundException());
+        when(userRepo.findUserByUsername("paff")).thenThrow(new UserNotFoundException());
 
         assertThrows(UsernameNotFoundException.class, () -> {
             mongoService.loadUserByUsername(username);
@@ -45,7 +45,7 @@ class MongoUserServiceTest {
                 .username(userTest)
                 .password(passTest)
                 .build();
-        User userNew = User.builder()
+        MongoUser userNew = MongoUser.builder()
                 .id(idTest)
                 .username(userTest)
                 .password(hashpass)

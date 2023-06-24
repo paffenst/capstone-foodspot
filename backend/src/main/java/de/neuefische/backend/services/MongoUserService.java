@@ -1,11 +1,12 @@
 package de.neuefische.backend.services;
 
-import de.neuefische.backend.models.User;
+import de.neuefische.backend.models.MongoUser;
 import de.neuefische.backend.models.UserDTO;
 import de.neuefische.backend.models.UserNoAuth;
 import de.neuefische.backend.repos.UserRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,15 +24,16 @@ public class MongoUserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findByUsername(username)
+        MongoUser mongoUser = userRepo.findUserByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("The user '" + username + "' could not be found."));
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), List.of());
+        return new User(mongoUser.getUsername(), mongoUser.getPassword(), List.of());
     }
+
 
     public UserNoAuth registerUser(UserDTO newAuthUser) {
         String uuid = idService.generateId();
         String cryptedPassword = cryptEncoderService.encodedPassword(newAuthUser);
-        User newUser = new User(uuid, newAuthUser.getUsername(), newAuthUser.getEmail(), cryptedPassword, newAuthUser.getFirstname(), newAuthUser.getLastname());
+        MongoUser newUser = new MongoUser(uuid, newAuthUser.getUsername(), newAuthUser.getEmail(), cryptedPassword, newAuthUser.getFirstname(), newAuthUser.getLastname());
         userRepo.save(newUser);
         return new UserNoAuth(newAuthUser.getUsername(), newAuthUser.getEmail(), newAuthUser.getFirstname(), newAuthUser.getLastname());
     }
