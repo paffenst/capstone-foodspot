@@ -1,29 +1,39 @@
-import React from 'react'
-import "./../../CSS/header.css"
-import {AppBar, Toolbar, Button} from '@mui/material';
+import React from 'react';
+import {AppBar, Button, Toolbar} from '@mui/material'
+import {useNavigate} from "react-router-dom";
 
 export default function Header() {
+    const navigate = useNavigate()
 
-    const handleLogin = () => {
-    };
+    function onClickRegisterHandler() {
+        navigate("/register");
+    }
 
-    const handleRegister = () => {
-    };
+    function onClickLoginHandler() {
+        navigate("/login");
+    }
+
     return (
         <AppBar position="static">
-            <Toolbar className={"Toolbar"}>
-                <div style={{ flexGrow: 10 }}>
+            <Toolbar className="Toolbar">
+                <div style={{flexGrow: 10}}>
                     <span>Food-Spot-App - Logo</span>
                 </div>
                 <div>
-                    <Button style={{height: "50%", backgroundColor: "blue", color: "white"}} variant="contained" onClick={handleLogin}>
+                    <Button onClick={onClickLoginHandler}
+                            style={{height: '50%', backgroundColor: 'blue', color: 'white'}}
+                            variant="contained">
                         Login
                     </Button>
-                    <Button style={{height: "50%", backgroundColor: "green", color: "white"}} variant="contained" onClick={handleRegister}>
+                </div>
+                <div>
+                    <Button onClick={onClickRegisterHandler}
+                            style={{height: '50%', backgroundColor: 'green', color: 'white'}}
+                            variant="contained">
                         Register
                     </Button>
                 </div>
             </Toolbar>
         </AppBar>
-    )
+    );
 }
