@@ -45,8 +45,8 @@ export default function Map(props: MapProps) {
     });
     return (
         <div>
-            <Box style={{width: '120vh', height: '90vh', display: 'flex', flexDirection: 'column'}}>
-                <Box style={{margin:'5px'}}  ref={mapContainer} flex={1}/>
+            <Box style={{width: '100%', height: '93vh', display: 'flex', flexDirection: 'column'}}>
+                <Box style={{margin: '5px'}} ref={mapContainer} flex={1}/>
             </Box>
         </div>
     )
