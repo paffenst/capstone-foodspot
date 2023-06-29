@@ -28,7 +28,7 @@ export default function AddFoodSpot(props: AddFoodSpotProps) {
     const initailFoodSpot: FoodSpot = {
         id: "",
         name: "",
-        placeType: [],
+        placeType: "",
         spaceType: [],
         allergens: [],
         position: props.markedLocation
@@ -86,7 +86,7 @@ export default function AddFoodSpot(props: AddFoodSpotProps) {
                             <FormLabel>Place type:</FormLabel>
                             <RadioGroup
                                 defaultValue="restaurant"
-                                name="place"
+                                name="placeType"
                                 onChange={handleInputChange}
                             >
                                 <FormControlLabel value="restaurant" control={<Radio/>} label="Restaurant"/>
