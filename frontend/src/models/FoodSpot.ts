@@ -6,6 +6,6 @@ export type FoodSpot = {
     name: string;
     placeType: Place[];
     spaceType: Space[];
-    allergenic: FoodType[];
+    allergens: FoodType[];
     position: Foodlocation
 }
