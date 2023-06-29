@@ -5,9 +5,11 @@ import {Foodlocation} from "../models/Foodlocation";
 import mapboxgl from "mapbox-gl";
 import {Add, FoodBank, LocationOn} from "@mui/icons-material";
 import AddFoodSpot from "./foodmap/AddFoodSpot";
+import {FoodSpot} from "../models/FoodSpot";
 
 type HomepageProps = {
     token: string
+    handleSaveSpot(newFoodSpot: FoodSpot): Promise<void>
 }
 export default function HomePage(props: HomepageProps) {
     const [openDrawer, setOpenDrawer] = useState<boolean>(false)
@@ -19,11 +21,14 @@ export default function HomePage(props: HomepageProps) {
         setOpenDrawer(false)
     }
 
-    function handleSaveSpot() {
-        setOpenDrawer(false)
-        setHideMarkLocation(true)
-        centerMarker?.remove()
-        setCenterMarker(undefined)
+    function handleSaveSpot(newFoodSpot: FoodSpot) {
+        props.handleSaveSpot(newFoodSpot)
+            .then(() => {
+                setOpenDrawer(false)
+                setHideMarkLocation(false)
+                centerMarker?.remove()
+                setCenterMarker(undefined)
+            })
     }
 
     function handleCreateCenterMarker() {
