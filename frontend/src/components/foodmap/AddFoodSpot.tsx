@@ -110,7 +110,7 @@ export default function AddFoodSpot(props: AddFoodSpotProps) {
                     <ListItem>
                         <MySelect
                             required={true}
-                            fieldName={"allergenic"}
+                            fieldName={"allergens"}
                             selectedValue={newFoodSpot.allergens}
                             data={allergens}
                             label={"Allergens"}
