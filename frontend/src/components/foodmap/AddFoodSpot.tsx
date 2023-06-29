@@ -1,8 +1,8 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import {FoodSpot} from "../../models/FoodSpot";
 import {Foodlocation} from "../../models/Foodlocation";
 
-import {allergenic, spaceType} from "../../models/FoodData";
+import {allergens, spaceType} from "../../models/FoodData";
 import {
     Box,
     Button,
@@ -30,10 +30,14 @@ export default function AddFoodSpot(props: AddFoodSpotProps) {
         name: "",
         placeType: [],
         spaceType: [],
-        allergenic: [],
+        allergens: [],
         position: props.markedLocation
     }
     const [newFoodSpot, setNewFoodSpot] = useState<FoodSpot>(initailFoodSpot);
+
+    useEffect(() => {
+        setNewFoodSpot({...newFoodSpot, position: props.markedLocation})
+    })
 
     function handleSave() {
         props.handleSave(newFoodSpot)
@@ -59,7 +63,7 @@ export default function AddFoodSpot(props: AddFoodSpotProps) {
              justifyContent={"space-between"}
              alignItems={"center"}
              flexDirection={"column"}>
-            <Typography textAlign={"center"} variant={"h6"}>Create a food spot</Typography>
+            <Typography textAlign={"center"} variant={"h5"}>Create your food spot</Typography>
             <Box
                 component={"form"}
                 noValidate
@@ -79,7 +83,7 @@ export default function AddFoodSpot(props: AddFoodSpotProps) {
                     </ListItem>
                     <ListItem>
                         <FormControl>
-                            <FormLabel>Place type</FormLabel>
+                            <FormLabel>Place type:</FormLabel>
                             <RadioGroup
                                 defaultValue="restaurant"
                                 name="place"
@@ -88,6 +92,7 @@ export default function AddFoodSpot(props: AddFoodSpotProps) {
                                 <FormControlLabel value="restaurant" control={<Radio/>} label="Restaurant"/>
                                 <FormControlLabel value="bar" control={<Radio/>} label="Bar"/>
                                 <FormControlLabel value="bakery" control={<Radio/>} label="Bakery"/>
+                                <FormControlLabel value="coffee" control={<Radio/>} label="Coffee"/>
                             </RadioGroup>
                         </FormControl>
                     </ListItem>
@@ -106,15 +111,21 @@ export default function AddFoodSpot(props: AddFoodSpotProps) {
                         <MySelect
                             required={true}
                             fieldName={"allergenic"}
-                            selectedValue={newFoodSpot.allergenic}
-                            data={allergenic}
-                            label={"Allergenic"}
+                            selectedValue={newFoodSpot.allergens}
+                            data={allergens}
+                            label={"Allergens"}
                             handleSelectChange={handleInputChange}
                         />
                     </ListItem>
                 </List>
-                <Button onClick={handleSave}>Save</Button>
-                <Button onClick={handleCancel}>Close</Button>
+                <Box sx={{m: 1}}
+                     display={"flex"}
+                     justifyContent={"space-between"}
+                     alignItems={"center"}
+                     flexDirection={"row"}>
+                    <Button style={{color: "black", backgroundColor: "lightgreen"}} onClick={handleSave}>Save</Button>
+                    <Button style={{color: "black", backgroundColor: "red"}} onClick={handleCancel}>Close</Button>
+                </Box>
             </Box>
         </Box>)
 }
