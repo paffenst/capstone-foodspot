@@ -10,7 +10,7 @@ export default function LoginPage() {
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         LoginUser(event)
-            .then(() => navigator("/userspots")
+            .then(() => navigator("/")
             );
     };
 
