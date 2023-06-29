@@ -4,6 +4,7 @@ import {Box} from '@mui/material';
 
 type MapProps = {
     token: string
+    choosePositionMarker: mapboxgl.Marker | undefined
 }
 
 export default function Map(props: MapProps) {
@@ -13,7 +14,7 @@ export default function Map(props: MapProps) {
     const map = useRef<mapboxgl.Map>();
     const [longitude, setLongitude] = useState(10.4515);
     const [latitude, setLatitude] = useState(51.1657);
-    const [zoom, setZoom] = useState(5.2);
+    const [zoom, setZoom] = useState(5.7);
 
     useEffect(() => {
         if (props.token === "") return;
@@ -34,12 +35,19 @@ export default function Map(props: MapProps) {
     });
 
     useEffect(() => {
+        if (props.token === "") return;
+        if (props.choosePositionMarker && map.current) {
+            props.choosePositionMarker.addTo(map.current)
+        }
         if (!map.current) return;
         map.current.on('move', () => {
             if (map.current) {
                 setLongitude(parseFloat(map.current?.getCenter().lng.toFixed(3)));
                 setLatitude(parseFloat(map.current?.getCenter().lat.toFixed(3)));
                 setZoom(parseFloat(map.current?.getZoom().toFixed(2)));
+                if (props.choosePositionMarker) {
+                    props.choosePositionMarker.setLngLat(map.current?.getCenter())
+                }
             }
         });
     });
