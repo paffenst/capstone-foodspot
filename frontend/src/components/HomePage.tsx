@@ -15,17 +15,6 @@ export default function HomePage(props: HomepageProps) {
     const [centerMarker, setCenterMarker] = useState<mapboxgl.Marker>()
     const [hideMarkLocation, setHideMarkLocation] = useState(true)
 
-    function handleCurrentPosition() {
-        navigator.geolocation.getCurrentPosition((position) => {
-            setMarkedLocation({
-                ...markedLocation,
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude
-            })
-            setOpenDrawer(true)
-        })
-    }
-
     function handleDrawerClose() {
         setOpenDrawer(false)
     }
