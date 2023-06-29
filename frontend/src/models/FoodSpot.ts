@@ -1,10 +1,10 @@
 import {Foodlocation} from "./Foodlocation";
-import {FoodType, Place, Space} from "./FoodData";
+import {FoodType, Space} from "./FoodData";
 
 export type FoodSpot = {
     id: string;
     name: string;
-    placeType: Place[];
+    placeType: string;
     spaceType: Space[];
     allergens: FoodType[];
     position: Foodlocation
