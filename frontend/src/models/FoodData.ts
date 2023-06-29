@@ -4,11 +4,12 @@ export const spaceType: string[] = [
 ]
 export type Space = "INDOOR" | "OUTDOOR";
 
-export const allergenic: string[] = [
+export const allergens: string[] = [
     "gluten-free",
-    "lactose"
+    "lactose-free",
+    "vegan"
 ]
-export type FoodType = "GLUTEN-FREE" | "LACTOSE";
+export type FoodType = "GLUTEN-FREE" | "LACTOSE-FREE" | "VEGAN";
 
 export type Place = "RESTAURANT" | "BAR" | "COFFEE" | "BAKERY";
 
