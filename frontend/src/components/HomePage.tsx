@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Map from "../components/foodmap/Map"
 import {Box, Drawer, Fab, SpeedDial, SpeedDialAction} from "@mui/material";
 import {Foodlocation} from "../models/Foodlocation";
@@ -6,6 +6,7 @@ import mapboxgl from "mapbox-gl";
 import {Add, FoodBank, LocationOn} from "@mui/icons-material";
 import AddFoodSpot from "./foodmap/AddFoodSpot";
 import {FoodSpot} from "../models/FoodSpot";
+import useAddFoodSpot from "../hooks/useAddFoodSpot";
 
 type HomepageProps = {
     token: string
@@ -16,7 +17,7 @@ export default function HomePage(props: HomepageProps) {
     const [markedLocation, setMarkedLocation] = useState<Foodlocation>({latitude: 0, longitude: 0})
     const [centerMarker, setCenterMarker] = useState<mapboxgl.Marker>()
     const [hideMarkLocation, setHideMarkLocation] = useState(true)
-
+    const {foodSpot, getFoodSpots} = useAddFoodSpot()
     function handleDrawerClose() {
         setOpenDrawer(false)
     }
@@ -28,6 +29,7 @@ export default function HomePage(props: HomepageProps) {
                 setHideMarkLocation(false)
                 centerMarker?.remove()
                 setCenterMarker(undefined)
+                getFoodSpots()
             })
     }
 
@@ -43,16 +45,21 @@ export default function HomePage(props: HomepageProps) {
             setMarkedLocation(
                 {
                     ...markedLocation,
-                    latitude: centerMarker?.getLngLat().lat, longitude: centerMarker?.getLngLat().lng
+                    latitude: centerMarker?.getLngLat().lat,
+                    longitude: centerMarker?.getLngLat().lng
                 })
             setOpenDrawer(true)
         }
     }
 
+    useEffect(() => {
+        getFoodSpots();
+    }, []);
+
     return (
         <div>
             <Box>
-                <Map choosePositionMarker={centerMarker} token={props.token}/>
+                <Map centerMarker={centerMarker} token={props.token} foodSpot={foodSpot}/>
                 {!hideMarkLocation &&
                     <Fab color={"success"} variant={"extended"} hidden={true} onClick={handleChoosePosition}
                          sx={{

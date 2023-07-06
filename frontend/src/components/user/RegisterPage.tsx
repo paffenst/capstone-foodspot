@@ -1,53 +1,82 @@
 import {Box, Button, TextField, Typography} from "@mui/material";
 import {ChangeEvent} from "react";
+import backgroundImage from '../../images/regformpage.jpg';
 import useRegister from "../../hooks/useRegister";
 
 export default function RegisterPage() {
-    const {inputTextFields, handleInputChange, registerInputHandler, passError, emailError} = useRegister();
+    const {
+        inputTextFields, handleInputChange, registerInputHandler,
+        passError, emailError
+    } = useRegister();
+
+    const inputProps = {
+        style: {
+            color: "white",
+        },
+    };
+
+    const textFieldProps = {
+        InputProps: inputProps,
+        InputLabelProps: {
+            style: {
+                color: "white",
+            },
+        },
+        size: "small" as const,
+    };
+
     return (
-        <>
-            <Box sx={{textAlign: "center"}}>
-                <Typography variant="h4" gutterBottom>
-                    Register Form
+        <div style={{
+            position: "relative",
+            minHeight: "100vh",
+            backgroundImage: `url(${backgroundImage})`,
+            backgroundSize: 'cover',
+            backgroundColor: 'whitesmoke',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+        }}>
+            <Box sx={{
+                position: "absolute",
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                color: 'whitesmoke',
+                textAlign: "center",
+                backdropFilter: "blur(8px)",
+                padding: "20px",
+                maxWidth: "400px",
+                width: "100%"
+            }}>
+                <Typography style={{color: "aquamarine", fontWeight: "bold"}} variant="h5" gutterBottom>
+                    SIGN UP TO SAVE AND SHARE
                 </Typography>
-            </Box>
-            <Box
-                sx={{
-                    textAlign: "center",
-                    display: "flex",
-                    flexDirection: "column",
-                    flexWrap: "wrap",
-                    alignContent: "space-around",
-                    rowGap: "5px",
-                }}
-            >
+                <Typography style={{color: "aquamarine", fontWeight: "bold"}} variant="h5" gutterBottom>
+                    YOUR FAVORTE FOODSPOTS
+                </Typography>
                 <Box
                     component="form"
                     onSubmit={registerInputHandler}
                     sx={{
                         "& .MuiTextField-root": {
                             m: 2,
-                            width: "25ch",
+                            width: "100%",
                             display: "flex",
                             flexDirection: "column",
-                            flexWrap: "wrap",
-                            rowGap: "10px",
                             justifyContent: "center",
                         },
                     }}
                     noValidate
                 >
                     <TextField
-                        size="small"
                         label="username"
                         id="usernameTextfield"
                         value={inputTextFields.username}
                         onChange={(event: ChangeEvent<HTMLInputElement>) =>
                             handleInputChange(event, "username")
                         }
+                        {...textFieldProps}
                     />
                     <TextField
-                        size="small"
                         label="password"
                         id="passwordTextfield"
                         type="password"
@@ -56,9 +85,9 @@ export default function RegisterPage() {
                         onChange={(event: ChangeEvent<HTMLInputElement>) =>
                             handleInputChange(event, "password")
                         }
+                        {...textFieldProps}
                     />
                     <TextField
-                        size="small"
                         label="email"
                         id="emailTextfield"
                         value={inputTextFields.email}
@@ -66,9 +95,9 @@ export default function RegisterPage() {
                         onChange={(event: ChangeEvent<HTMLInputElement>) =>
                             handleInputChange(event, "email")
                         }
+                        {...textFieldProps}
                     />
                     <TextField
-                        size="small"
                         label="firstname"
                         id="firstnameTextfield"
                         type="text"
@@ -76,9 +105,9 @@ export default function RegisterPage() {
                         onChange={(event: ChangeEvent<HTMLInputElement>) =>
                             handleInputChange(event, "firstname")
                         }
+                        {...textFieldProps}
                     />
                     <TextField
-                        size="small"
                         label="lastname"
                         id="lastnameTextfield"
                         type="text"
@@ -86,12 +115,15 @@ export default function RegisterPage() {
                         onChange={(event: ChangeEvent<HTMLInputElement>) =>
                             handleInputChange(event, "lastname")
                         }
+                        {...textFieldProps}
                     />
-                    <Button type="submit" variant="contained" color="inherit" size="large">
-                        Register
+                    <Button type="submit" variant="contained"
+                            style={{height: '50%', backgroundColor: 'green', color: 'white'}}
+                            size="large">
+                        Sign up
                     </Button>
                 </Box>
             </Box>
-        </>
+        </div>
     )
 }
