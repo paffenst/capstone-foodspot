@@ -29,6 +29,11 @@ public class MongoUserService implements UserDetailsService {
     public UserDTO registerUser(MongoUser newUser) {
         String uuid = idService.generateId();
         String cryptedPassword = cryptEncoderService.encodedPassword(newUser);
+        String username = newUser.getUsername();
+
+        if (userRepo.findUserByUsername(username).isPresent()) {
+            throw new IllegalArgumentException("Username already exist");
+        }
 
         MongoUser mongoUser = new MongoUser(uuid, newUser.getUsername(), newUser.getEmail(), cryptedPassword, newUser.getFirstname(), newUser.getLastname(), newUser.getCreatedFoodSpots());
         userRepo.save(mongoUser);
