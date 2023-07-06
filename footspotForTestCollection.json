@@ -1,0 +1,91 @@
+[
+  {
+    "_id": "e5bccd6a-a33f-4ef3-9193-f0ebe6fb2706",
+    "name": "PHO YOU",
+    "spaceType": [
+      "indoor",
+      "outdoor"
+    ],
+    "allergens": [
+      "gluten-free",
+      "vegan",
+      "lactose-free"
+    ],
+    "placeType": "restaurant",
+    "position": {
+      "latitude": {
+        "$numberDouble": "48.15029233915084"
+      },
+      "longitude": {
+        "$numberDouble": "11.572980810666849"
+      }
+    },
+    "_class": "de.neuefische.backend.models.FoodSpot"
+  },
+  {
+    "_id": "60490cea-2fea-405b-8343-0ae29aa995ed",
+    "name": "Isabella Glutenfree Pasteries",
+    "spaceType": [
+      "indoor"
+    ],
+    "allergens": [
+      "gluten-free",
+      "lactose-free",
+      "vegan"
+    ],
+    "placeType": "bakery",
+    "position": {
+      "latitude": {
+        "$numberDouble": "53.557806360391766"
+      },
+      "longitude": {
+        "$numberDouble": "9.988344190753253"
+      }
+    },
+    "_class": "de.neuefische.backend.models.FoodSpot"
+  },
+  {
+    "_id": "60490cea-2fea-405b-8343-0ae29aa995ed",
+    "name": "Isabella Glutenfree Pasteries",
+    "spaceType": [
+      "indoor"
+    ],
+    "allergens": [
+      "gluten-free",
+      "lactose-free",
+      "vegan"
+    ],
+    "placeType": "bakery",
+    "position": {
+      "latitude": {
+        "$numberDouble": "53.557806360391766"
+      },
+      "longitude": {
+        "$numberDouble": "9.988344190753253"
+      }
+    },
+    "_class": "de.neuefische.backend.models.FoodSpot"
+  },
+  {
+    "_id": "321540ee-a723-4e4c-9d8e-40d82d411870",
+    "name": "Luis",
+    "spaceType": [
+      "indoor",
+      "outdoor"
+    ],
+    "allergens": [
+      "gluten-free",
+      "lactose-free"
+    ],
+    "placeType": "restaurant",
+    "position": {
+      "latitude": {
+        "$numberDouble": "40.395896078534406"
+      },
+      "longitude": {
+        "$numberDouble": "-3.701188626205294"
+      }
+    },
+    "_class": "de.neuefische.backend.models.FoodSpot"
+  }
+]

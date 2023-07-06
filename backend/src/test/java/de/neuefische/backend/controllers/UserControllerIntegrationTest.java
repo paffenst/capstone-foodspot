@@ -99,4 +99,13 @@ class UserControllerIntegrationTest {
                             }
                         """));
     }
+
+    @Test
+    @WithMockUser(username = "testuser")
+    void test_GetUsername() throws Exception {
+        // when/then
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/me"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("testuser"));
+    }
 }

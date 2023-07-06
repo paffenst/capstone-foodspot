@@ -12,6 +12,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -62,5 +64,23 @@ class FoodSpotServiceTest {
     void getById_expect_throws_exception() {
         assertThrows(NoSuchFoodSpotException.class, () -> foodSpotService.getById("0"));
         verify(foodSpotRepo).findById("0");
+    }
+
+    @Test
+    void test_List_FoodSpots() {
+        // given
+        List<FoodSpot> expectedSpots = Arrays.asList(
+                new FoodSpot("1", "test", new ArrayList<>(),
+                        new ArrayList<>(), "test",
+                        new Foodlocation(50.000, 10.000)),
+                new FoodSpot("2", "test", new ArrayList<>(),
+                        new ArrayList<>(), "test",
+                        new Foodlocation(52.000, 12.000))
+        );
+        when(foodSpotRepo.findAll()).thenReturn(expectedSpots);
+        // when
+        List<FoodSpot> actualSpots = foodSpotService.list();
+        // then
+        assertEquals(expectedSpots, actualSpots);
     }
 }
