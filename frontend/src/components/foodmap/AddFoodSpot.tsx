@@ -37,7 +37,7 @@ export default function AddFoodSpot(props: AddFoodSpotProps) {
 
     useEffect(() => {
         setNewFoodSpot({...newFoodSpot, position: props.markedLocation})
-    })
+    }, [])
 
     function handleSave() {
         props.handleSave(newFoodSpot)
@@ -47,9 +47,10 @@ export default function AddFoodSpot(props: AddFoodSpotProps) {
         props.handleCancel();
     }
 
-    function handleInputChange(event: SelectChangeEvent<string[]>
-        | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-        | Event) {
+    function handleInputChange(event:
+                                   | SelectChangeEvent<string[]>
+                                   | ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+                                   | Event) {
         if (event.target) {
             // @ts-ignore
             setNewFoodSpot({...newFoodSpot, [event.target.name]: event.target.value})
@@ -85,7 +86,7 @@ export default function AddFoodSpot(props: AddFoodSpotProps) {
                         <FormControl>
                             <FormLabel>Place type:</FormLabel>
                             <RadioGroup
-                                defaultValue="restaurant"
+                                defaultValue=""
                                 name="placeType"
                                 onChange={handleInputChange}
                             >

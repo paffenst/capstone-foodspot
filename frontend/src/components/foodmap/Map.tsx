@@ -1,15 +1,17 @@
 import React, {useEffect, useRef, useState} from 'react';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl, {LngLatLike} from 'mapbox-gl';
 import {Box} from '@mui/material';
+import {FoodSpot} from "../../models/FoodSpot";
+import {Foodlocation} from "../../models/Foodlocation";
 
 type MapProps = {
     token: string
-    choosePositionMarker: mapboxgl.Marker | undefined
+    centerMarker: mapboxgl.Marker | undefined
+    foodSpot: FoodSpot[]
 }
 
 export default function Map(props: MapProps) {
     mapboxgl.accessToken = props.token
-
     const mapContainer = useRef<HTMLDivElement | string>("");
     const map = useRef<mapboxgl.Map>();
     const [longitude, setLongitude] = useState(10.4515);
@@ -18,6 +20,9 @@ export default function Map(props: MapProps) {
 
     useEffect(() => {
         if (props.token === "") return;
+        if (props.centerMarker && map.current) {
+            props.centerMarker.addTo(map.current)
+        }
         if (map.current) return;
         map.current = new mapboxgl.Map({
             attributionControl: false,
@@ -27,30 +32,52 @@ export default function Map(props: MapProps) {
             zoom: zoom,
             minZoom: 3
         });
+
         map.current?.addControl(new mapboxgl.GeolocateControl({
-            positionOptions:{
-                enableHighAccuracy:true,
+            positionOptions: {
+                enableHighAccuracy: true,
             }
-        }))
-    });
+        }));
+
+
+    }, [props.token, props.centerMarker]);
+
 
     useEffect(() => {
-        if (props.token === "") return;
-        if (props.choosePositionMarker && map.current) {
-            props.choosePositionMarker.addTo(map.current)
-        }
         if (!map.current) return;
         map.current.on('move', () => {
             if (map.current) {
-                setLongitude(parseFloat(map.current?.getCenter().lng.toFixed(3)));
-                setLatitude(parseFloat(map.current?.getCenter().lat.toFixed(3)));
-                setZoom(parseFloat(map.current?.getZoom().toFixed(2)));
-                if (props.choosePositionMarker) {
-                    props.choosePositionMarker.setLngLat(map.current?.getCenter())
+                setLongitude(parseFloat(map.current.getCenter().lng.toFixed(3)));
+                setLatitude(parseFloat(map.current.getCenter().lat.toFixed(3)));
+                setZoom(parseFloat(map.current.getZoom().toFixed(2)));
+
+                if (props.centerMarker) {
+                    props.centerMarker.setLngLat(map.current?.getCenter())
                 }
             }
         });
-    });
+    }, [props.centerMarker]);
+
+    useEffect(() => {
+        if (!map.current) return;
+        if (props.foodSpot && props.foodSpot.length > 0) {
+            props.foodSpot.forEach((foodspot) => {
+                if (map.current) {
+                    const {longitude, latitude}: Foodlocation = foodspot.position;
+                    const spotPopup = new mapboxgl.Popup({offset: 25, maxWidth: "none"})
+                        .setHTML(`<div style="background-size: cover; 
+                    background-color: #61dafb">Name: ${foodspot.name} <br> Place: ${foodspot.placeType}</div>`)
+
+                    const lngLat: LngLatLike = [longitude, latitude];
+                    new mapboxgl.Marker()
+                        .setPopup(spotPopup)
+                        .setLngLat(lngLat)
+                        .addTo(map.current);
+                }
+            })
+        }
+    }, [props.foodSpot])
+
     return (
         <div>
             <Box style={{width: '100%', height: '93vh', display: 'flex', flexDirection: 'column'}}>
