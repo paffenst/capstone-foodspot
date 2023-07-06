@@ -32,7 +32,7 @@ export default function useRegister() {
     }, [inputTextFields])
 
     function validEmail(email: string) {
-        const rex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}])|(([a-zA-Z0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const rex = /^(?=.{1,256})(?=.{1,64}@)[^@]*@[^@]*$/;
         return rex.test(email);
     }
 
@@ -55,7 +55,7 @@ export default function useRegister() {
         event.preventDefault();
         if (validEmail(inputTextFields.email) && validPassword(inputTextFields.password)) {
             event.preventDefault();
-            axios.post("/api/register", {
+            axios.post("/user/register", {
                 username: inputTextFields.username,
                 password: inputTextFields.password,
                 email: inputTextFields.email,
