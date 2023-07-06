@@ -1,4 +1,9 @@
 FROM openjdk:17
+
 EXPOSE 8080
-ADD backend/target/foodspot.jar foodspot.jar
-CMD [ "sh", "-c", "java -jar /foodspot.jar"]
+
+MAINTAINER Pavel Stoyanov <pavel.angelov.stoyanov@gmail.com>
+
+ADD backend/target/foodspotters.jar foodspotters.jar
+
+CMD [ "sh", "-c", "java -jar /foodspotters.jar" ]
