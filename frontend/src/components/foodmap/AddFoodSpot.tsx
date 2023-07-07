@@ -37,7 +37,7 @@ export default function AddFoodSpot(props: AddFoodSpotProps) {
 
     useEffect(() => {
         setNewFoodSpot({...newFoodSpot, position: props.markedLocation})
-    }, [])
+    }, [newFoodSpot, props.markedLocation])
 
     function handleSave() {
         props.handleSave(newFoodSpot)
