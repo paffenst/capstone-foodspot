@@ -67,4 +67,21 @@ class MongoUserServiceTest {
         assertThrows(UsernameNotFoundException.class, () -> mongoService.loadUserByUsername(fakename));
         verify(userRepo).findUserByUsername(fakename);
     }
+
+    @DirtiesContext
+    @Test
+    void registerUser_usernameAlreadyExists_expectIllegalArgumentException() {
+        // given
+        String existingUsername = "existingUser";
+        MongoUser newUser = new MongoUser();
+        newUser.setUsername(existingUsername);
+
+        when(userRepo.findUserByUsername(existingUsername)).thenReturn(Optional.of(new MongoUser()));
+
+        // when
+        assertThrows(IllegalArgumentException.class, () -> mongoService.registerUser(newUser));
+
+        // then
+        verify(userRepo).findUserByUsername(existingUsername);
+    }
 }

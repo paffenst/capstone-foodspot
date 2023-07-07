@@ -5,13 +5,10 @@ import de.neuefische.backend.models.UserDTO;
 import de.neuefische.backend.services.MongoUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
     private final MongoUserService userService;
@@ -27,5 +24,10 @@ public class UserController {
                 .getContext()
                 .getAuthentication()
                 .getName();
+    }
+
+    @GetMapping("/me")
+    public String getUsername() {
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

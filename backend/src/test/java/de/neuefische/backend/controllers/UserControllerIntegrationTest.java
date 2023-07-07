@@ -27,7 +27,7 @@ class UserControllerIntegrationTest {
     @DirtiesContext
     @WithMockUser()
     void registerUser() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 """
@@ -44,7 +44,7 @@ class UserControllerIntegrationTest {
     @DirtiesContext
     @WithMockUser(username = "test", password = "testpass")
     void loginUser_thenReturnStatus200() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/login")
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/login")
                         .with(csrf()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("test"));
@@ -54,7 +54,7 @@ class UserControllerIntegrationTest {
     @DirtiesContext
     @WithMockUser()
     void userLogin_returnStatus200() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 """
@@ -66,7 +66,7 @@ class UserControllerIntegrationTest {
                         ).with(csrf()))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/login")
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/login")
                         .with(csrf()))
                 .andExpect(status().isOk());
     }
@@ -85,7 +85,7 @@ class UserControllerIntegrationTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonRequestBody = objectMapper.writeValueAsString(newUser);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/api/register")
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequestBody)
                         .with(csrf()))
@@ -98,5 +98,14 @@ class UserControllerIntegrationTest {
                                 "lastname": "lastnametest"
                             }
                         """));
+    }
+
+    @Test
+    @WithMockUser(username = "testuser")
+    void test_GetUsername() throws Exception {
+        // when/then
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/me"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("testuser"));
     }
 }

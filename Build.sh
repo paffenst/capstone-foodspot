@@ -6,4 +6,4 @@ mv build ../backend/src/main/resources/static
 cd ../backend
 ./mvnw clean package
 cd ..
-docker build -t footspot .
+docker build -t foodspotters .
