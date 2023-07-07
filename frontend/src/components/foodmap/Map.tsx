@@ -10,7 +10,7 @@ type MapProps = {
     foodSpot: FoodSpot[]
 }
 
-export default function Map(props: MapProps) {
+export default function Map1(props: MapProps) {
     mapboxgl.accessToken = props.token
     const mapContainer = useRef<HTMLDivElement | string>("");
     const map = useRef<mapboxgl.Map>();
@@ -40,7 +40,7 @@ export default function Map(props: MapProps) {
         }));
 
 
-    }, [props.token, props.centerMarker]);
+    }, [props.token, props.centerMarker, longitude, latitude, zoom]);
 
 
     useEffect(() => {

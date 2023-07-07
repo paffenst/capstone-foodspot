@@ -54,7 +54,7 @@ export default function HomePage(props: HomepageProps) {
 
     useEffect(() => {
         getFoodSpots();
-    }, []);
+    }, [getFoodSpots]);
 
     return (
         <div>

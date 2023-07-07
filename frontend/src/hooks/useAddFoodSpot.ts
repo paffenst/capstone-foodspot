@@ -7,7 +7,7 @@ export default function useAddFoodSpot() {
 
     useEffect(() => {
         getFoodSpots();
-    }, []);
+    }, [getFoodSpots]);
 
     function addFoodSpot(newFoodSpot: FoodSpot): Promise<void> {
         return axios
@@ -19,6 +19,7 @@ export default function useAddFoodSpot() {
         return axios.get("/food-spots/allFoodSpots").then((response) => response.data);
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     function getFoodSpots(): void {
         getAllFoodSpots().then((data) => setFoodSpot(data));
     }
