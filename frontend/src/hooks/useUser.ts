@@ -3,8 +3,7 @@ import {ChangeEvent, FormEvent, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 export default function useUser() {
-    const [user, setUser] = useState<string>();
-    const [errorMessage, setErrormessage] = useState("unknown error");
+    const [user, setUser] = useState<string | undefined>();
     const [inputFields, setInputFields] = useState({
         username: "",
         password: "",
@@ -17,17 +16,12 @@ export default function useUser() {
             .post("/user/login", undefined, {auth: {username, password}})
             .then((response) => {
                 getUsername()
+                nav("/")
             }).catch((error) => {
-                if (error.response && error.response.status === 401) {
+                if (error.response) {
                     setUser(undefined);
-                    setErrormessage(
-                        "User '" +
-                        inputFields.username +
-                        "' does not exist or the password is wrong."
-                    );
-                    console.error(errorMessage);
                 } else {
-                    console.error(error);
+                    console.error(error.response.data);
                 }
             });
     }
@@ -39,10 +33,12 @@ export default function useUser() {
             username = response.data;
             if (username === "anonymousUser" || username === undefined) {
                 nav("/login")
-            } else nav("/")
-        }).catch(error => {
-            console.log(error)
+            }
+        }).then(() => {
         })
+            .catch(error => {
+                console.log(error)
+            })
     }
 
     function handleUsernameChange(event: ChangeEvent<HTMLInputElement>) {
@@ -57,7 +53,6 @@ export default function useUser() {
         LoginUser,
         user,
         getUsername,
-        errorMessage,
         handleUsernameChange,
         handlePasswordChange,
         inputFields
