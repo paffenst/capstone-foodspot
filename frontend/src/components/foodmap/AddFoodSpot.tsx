@@ -125,7 +125,7 @@ export default function AddFoodSpot(props: AddFoodSpotProps) {
                      alignItems={"center"}
                      flexDirection={"row"}>
                     <Button style={{color: "black", backgroundColor: "lightgreen"}} onClick={handleSave}>Save</Button>
-                    <Button style={{color: "black", backgroundColor: "red"}} onClick={handleCancel}>Close</Button>
+                    <Button style={{color: "black", backgroundColor: "lightgray"}} onClick={handleCancel}>Close</Button>
                 </Box>
             </Box>
         </Box>)
