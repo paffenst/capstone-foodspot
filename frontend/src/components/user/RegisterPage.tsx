@@ -42,7 +42,7 @@ export default function RegisterPage() {
                 transform: "translate(-50%, -50%)",
                 color: 'whitesmoke',
                 textAlign: "center",
-                backdropFilter: "blur(8px)",
+                backdropFilter: "blur(12px)",
                 padding: "20px",
                 maxWidth: "400px",
                 width: "100%"
@@ -118,7 +118,7 @@ export default function RegisterPage() {
                         {...textFieldProps}
                     />
                     <Button type="submit" variant="contained"
-                            style={{height: '50%', backgroundColor: 'green', color: 'white'}}
+                            style={{height: '50%', backgroundColor: 'floralwhite', color: 'black'}}
                             size="large">
                         Sign up
                     </Button>
