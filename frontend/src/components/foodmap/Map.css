@@ -1,0 +1,17 @@
+.custom-popup {
+    border: none !important;
+}
+
+.custom-popup-content {
+    background-size: cover;
+    background-color: #7FFFD4;
+    color: black;
+    padding: inherit;
+}
+
+.custom-marker {
+    width: 52px;
+    height: 52px;
+    background-image: url('./../../images/marker.png');
+    color: #13e51d;
+}

@@ -1,37 +1,64 @@
 import {Box, Button, TextField, Typography} from "@mui/material";
 import useUser from "../../hooks/useUser";
-import backgroundImage from '../../images/logformpage.jpg';
+import backgroundImage from "../../images/logformpage.jpg";
 import {FormEvent} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export default function LoginPage() {
     const {LoginUser, handleUsernameChange, handlePasswordChange, inputFields} = useUser();
-    const navigator = useNavigate()
+    const navigator = useNavigate();
+
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        LoginUser(event)
-            .then(() => navigator("/")
-            );
+        LoginUser(event).then(() => navigator("/"));
+    };
+
+    function onClickRegisterHandler() {
+        navigator("/register");
+    }
+
+    const inputProps = {
+        style: {
+            color: "white",
+        },
+    };
+
+    const textFieldProps = {
+        InputProps: inputProps,
+        InputLabelProps: {
+            style: {
+                color: "white",
+            },
+        },
+        size: "medium" as const,
     };
 
     return (
-        <div style={{
-            position: "relative",
-            minHeight: "100vh",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            backgroundRepeat: 'no-repeat',
-            backgroundImage: `url(${backgroundImage})`,
-            backgroundSize: 'cover',
-        }}>
+        <div
+            style={{
+                position: "relative",
+                minHeight: "100vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "whitesmoke",
+                backgroundRepeat: "no-repeat",
+                backgroundImage: `url(${backgroundImage})`,
+                backgroundSize: "cover",
+            }}
+        >
             <Box
                 sx={{
                     position: "absolute",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    backgroundColor: "rgba(161, 192, 140, 0.8)",
+                    backdropFilter: "blur(7px)",
+                    justifyContent: "center",
+                    width: "90%",
+                    maxWidth: "400px",
+                    padding: "20px",
+                    minHeight: "300px", // Adjust the height of the blurred window
                 }}
             >
                 <Typography style={{color: "aquamarine", fontWeight: "bold"}} variant="h5" gutterBottom>
@@ -41,53 +68,51 @@ export default function LoginPage() {
                     component="form"
                     onSubmit={handleSubmit}
                     sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        width: "100%",
                         "& .MuiTextField-root": {
-                            m: 1,
-                            width: "25ch",
-                            display: "flex",
-                            flexDirection: "column",
-                            flexWrap: "wrap",
-                            rowGap: "5px",
-                            justifyContent: "center",
-                        },
-                        "& .Register": {
-                            alignSelf: "flex-end",
-                            m: 1,
-                            color: "white",
-                            textDecoration: "underline",
-                            fontSize: "14px",
+                            width: "100%",
+                            marginBottom: "10px",
                         },
                     }}
                     noValidate
                     autoComplete="off"
                 >
                     <TextField
-                        size="medium"
                         label="username"
                         id="usernameTextfield"
                         value={inputFields.username}
                         onChange={handleUsernameChange}
+                        {...textFieldProps}
                     />
                     <TextField
-                        size="medium"
                         label="password"
                         type="password"
                         id="passwordTextfield"
                         value={inputFields.password}
                         onChange={handlePasswordChange}
+                        {...textFieldProps}
                     />
                     <Button
-                        style={{backgroundColor: 'aquamarine', color: 'black'}}
+                        style={{backgroundColor: "aquamarine", color: "black", width: "100%"}}
                         type="submit"
-                        variant="outlined"
+                        variant="contained"
                         color="inherit"
                         size="medium"
                     >
                         Sign in
                     </Button>
-                    <Link className="Register" to={`/register`}>
+                    <Button
+                        onClick={onClickRegisterHandler}
+                        style={{backgroundColor: "floralwhite", color: "black", width: "100%"}}
+                        variant="contained"
+                        color="inherit"
+                        size="medium"
+                    >
                         Sign up
-                    </Link>
+                    </Button>
                 </Box>
             </Box>
         </div>

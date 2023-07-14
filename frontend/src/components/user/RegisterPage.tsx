@@ -5,8 +5,11 @@ import useRegister from "../../hooks/useRegister";
 
 export default function RegisterPage() {
     const {
-        inputTextFields, handleInputChange, registerInputHandler,
-        passError, emailError
+        inputTextFields,
+        handleInputChange,
+        registerInputHandler,
+        passError,
+        emailError
     } = useRegister();
 
     const inputProps = {
@@ -26,15 +29,17 @@ export default function RegisterPage() {
     };
 
     return (
-        <div style={{
-            position: "relative",
-            minHeight: "100vh",
-            backgroundImage: `url(${backgroundImage})`,
-            backgroundSize: 'cover',
-            backgroundColor: 'whitesmoke',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat'
-        }}>
+        <div
+            style={{
+                position: "relative",
+                minHeight: "100vh",
+                backgroundImage: `url(${backgroundImage})`,
+                backgroundSize: 'cover',
+                backgroundColor: 'whitesmoke',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+            }}
+        >
             <Box sx={{
                 position: "absolute",
                 top: "50%",
@@ -42,27 +47,25 @@ export default function RegisterPage() {
                 transform: "translate(-50%, -50%)",
                 color: 'whitesmoke',
                 textAlign: "center",
-                backdropFilter: "blur(8px)",
+                backdropFilter: "blur(12px)",
                 padding: "20px",
                 maxWidth: "400px",
-                width: "100%"
+                width: "80%",
+                margin: "0 auto",
             }}>
                 <Typography style={{color: "aquamarine", fontWeight: "bold"}} variant="h5" gutterBottom>
                     SIGN UP TO SAVE AND SHARE
                 </Typography>
                 <Typography style={{color: "aquamarine", fontWeight: "bold"}} variant="h5" gutterBottom>
-                    YOUR FAVORTE FOODSPOTS
+                    YOUR FAVORITE FOODSPOTS
                 </Typography>
                 <Box
                     component="form"
                     onSubmit={registerInputHandler}
                     sx={{
                         "& .MuiTextField-root": {
-                            m: 2,
+                            m: 1,
                             width: "100%",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
                         },
                     }}
                     noValidate
@@ -117,9 +120,12 @@ export default function RegisterPage() {
                         }
                         {...textFieldProps}
                     />
-                    <Button type="submit" variant="contained"
-                            style={{height: '50%', backgroundColor: 'green', color: 'white'}}
-                            size="large">
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        style={{backgroundColor: 'floralwhite', color: 'black', width: '100%'}}
+                        size="large"
+                    >
                         Sign up
                     </Button>
                 </Box>

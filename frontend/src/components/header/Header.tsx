@@ -1,6 +1,6 @@
 import React from 'react';
 import {AppBar, Button, Toolbar} from '@mui/material'
-import foodspotterslogo from '../../images/logofoodspotters.png';
+import foodspotterslogo from '../../images/FS_green_rounded_final_logo.png';
 import {NavLink, useNavigate} from "react-router-dom";
 
 export default function Header() {
@@ -23,16 +23,16 @@ export default function Header() {
                 </NavLink>
                 <div>
                     <Button onClick={onClickLoginHandler}
-                            style={{height: '50%', backgroundColor: 'blue', color: 'white'}}
+                            style={{height: '50%', backgroundColor: 'aquamarine', color: 'black'}}
                             variant="contained">
-                        Login
+                        Sign In
                     </Button>
                 </div>
                 <div>
                     <Button onClick={onClickRegisterHandler}
-                            style={{height: '50%', backgroundColor: 'green', color: 'white'}}
+                            style={{height: '50%', backgroundColor: 'floralwhite ', color: 'black'}}
                             variant="contained">
-                        Register
+                        Sign Up
                     </Button>
                 </div>
             </Toolbar>

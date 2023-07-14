@@ -3,6 +3,7 @@ import mapboxgl, {LngLatLike} from 'mapbox-gl';
 import {Box} from '@mui/material';
 import {FoodSpot} from "../../models/FoodSpot";
 import {Foodlocation} from "../../models/Foodlocation";
+import ".././foodmap/Map.css";
 
 type MapProps = {
     token: string
@@ -64,12 +65,24 @@ export default function Map1(props: MapProps) {
             props.foodSpot.forEach((foodspot) => {
                 if (map.current) {
                     const {longitude, latitude}: Foodlocation = foodspot.position;
-                    const spotPopup = new mapboxgl.Popup({offset: 25, maxWidth: "none"})
-                        .setHTML(`<div style="background-size: cover; 
-                    background-color: #61dafb">Name: ${foodspot.name} <br> Place: ${foodspot.placeType}</div>`)
+                    const spotPopup = new mapboxgl.Popup({
+                        offset: 1, maxWidth: "none",
+                        className: "custom-popup"
+                    })
+                        .setHTML(`<div class="custom-popup-content">
+                                        Name: ${foodspot.name} <br>
+                                        Place: ${foodspot.placeType} <br>
+                                        Allergens: ${foodspot.allergens
+                            .slice(0, 3)
+                            .map(allergen => `<span>${allergen}</span>`)
+                            .join(", ")} <br>
+                                  </div>`)
+                    const markerElement = document.createElement('div');
+                    markerElement.className = 'custom-marker';
+
 
                     const lngLat: LngLatLike = [longitude, latitude];
-                    new mapboxgl.Marker()
+                    new mapboxgl.Marker(markerElement)
                         .setPopup(spotPopup)
                         .setLngLat(lngLat)
                         .addTo(map.current);

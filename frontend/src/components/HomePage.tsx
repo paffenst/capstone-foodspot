@@ -30,6 +30,7 @@ export default function HomePage(props: HomepageProps) {
                 centerMarker?.remove()
                 setCenterMarker(undefined)
                 getFoodSpots()
+                setHideMarkLocation(true)
             })
     }
 
@@ -61,13 +62,13 @@ export default function HomePage(props: HomepageProps) {
             <Box>
                 <Map centerMarker={centerMarker} token={props.token} foodSpot={foodSpot}/>
                 {!hideMarkLocation &&
-                    <Fab color={"success"} variant={"extended"} hidden={true} onClick={handleChoosePosition}
+                    <Fab color={"primary"} variant={"extended"} hidden={true} onClick={handleChoosePosition}
                          sx={{
                              left: 50,
                              position: 'fixed',
                              bottom: 40
                          }}>
-                        <FoodBank style={{color: "gold"}} sx={{mr: 1}}/>
+                        <FoodBank style={{color: "coral"}} sx={{mr: 1}}/>
                         Mark location
                     </Fab>}
                 <SpeedDial
