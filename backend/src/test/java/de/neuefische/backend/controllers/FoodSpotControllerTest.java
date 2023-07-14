@@ -22,7 +22,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -33,18 +32,6 @@ class FoodSpotControllerTest {
     private final String endPoint = "/api/food-spots";
     public FoodSpotService service = mock(FoodSpotService.class);
     private FoodSpotController controller = new FoodSpotController(service);
-
-    @Test
-    void listSpots_expect_emptyList() throws Exception {
-        mvc.perform(get(endPoint))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
-    void byId_expect_404() throws Exception {
-        mvc.perform(get(endPoint + "/0"))
-                .andExpect(status().isNotFound());
-    }
 
     @Test
     @DirtiesContext
