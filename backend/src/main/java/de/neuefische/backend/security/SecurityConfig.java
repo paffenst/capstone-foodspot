@@ -41,7 +41,7 @@ public class SecurityConfig {
                                         HttpStatus.UNAUTHORIZED.getReasonPhrase()
                                 )))
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/user/**").permitAll();
+                    auth.requestMatchers(("/user/login"), ("/user/register")).permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/api/mapbox").permitAll();
                     auth.requestMatchers("api/food-spots/**").authenticated();
                     auth.requestMatchers("/").authenticated();
