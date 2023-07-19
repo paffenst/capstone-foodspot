@@ -1,5 +1,5 @@
-import axios from "axios";
-import {ChangeEvent, FormEvent, useState} from "react";
+import axios, {AxiosError} from "axios";
+import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 
 export default function useUser() {
@@ -8,53 +8,72 @@ export default function useUser() {
         username: "",
         password: "",
     });
-    const nav = useNavigate();
-    function LoginUser(event: FormEvent<HTMLFormElement>) {
+    const navigator = useNavigate();
+    const [errorMessage, setErrorMessage] = useState("");
+
+    const loginUser = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const {username, password} = inputFields;
-        return axios
-            .post("/user/login", undefined, {auth: {username, password}})
-            .then((response) => {
-                getUsername()
-                nav("/")
-            }).catch((error) => {
-                if (error.response) {
-                    setUser(undefined);
-                } else {
-                    console.error(error.response.data);
-                }
+        try {
+            const response = await axios.post("/user/login", undefined, {
+                auth: {username, password},
             });
-    }
-
-    function getUsername() {
-        let username = undefined;
-        axios.get("/user/me").then((response) => {
             setUser(response.data);
-            username = response.data;
-            if (username === "anonymousUser" || username === undefined) {
-                nav("/login")
+            setErrorMessage("");
+            navigator("/");
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                const axiosError = error as AxiosError;
+                if (axiosError.response?.status === 401) {
+                    setErrorMessage("username or password is incorrect !");
+                } else {
+                    setErrorMessage("An error has occurred. Please try again.");
+                }
+            } else {
+                console.error(error);
             }
-        }).then(() => {
-        })
-            .catch(error => {
-                console.log(error)
-            })
-    }
+        }
+    };
 
-    function handleUsernameChange(event: ChangeEvent<HTMLInputElement>) {
+    const logout = () => {
+        setUser(undefined);
+        navigator("/login");
+    };
+
+    const getUsername = async () => {
+        try {
+            const response = await axios.get("/user/me");
+            const username = response.data;
+            setUser(username);
+            if (username === "anonymousUser" || !username) {
+                navigator("/login");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        // eslint-disable-next-line
+        getUsername();
+    }, []);
+
+    const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInputFields({...inputFields, username: event.target.value});
-    }
+    };
 
-    function handlePasswordChange(event: ChangeEvent<HTMLInputElement>) {
+    const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInputFields({...inputFields, password: event.target.value});
-    }
+    };
 
     return {
-        LoginUser,
+        loginUser,
+        logout,
         user,
         getUsername,
         handleUsernameChange,
         handlePasswordChange,
-        inputFields
+        inputFields,
+        errorMessage,
     };
 }

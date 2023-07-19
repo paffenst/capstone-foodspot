@@ -5,12 +5,12 @@ import {FormEvent} from "react";
 import {useNavigate} from "react-router-dom";
 
 export default function LoginPage() {
-    const {LoginUser, handleUsernameChange, handlePasswordChange, inputFields} = useUser();
+    const {loginUser, handleUsernameChange, handlePasswordChange, inputFields, errorMessage} = useUser();
     const navigator = useNavigate();
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        LoginUser(event).then(() => navigator("/"));
+        loginUser(event);
     };
 
     function onClickRegisterHandler() {
@@ -58,7 +58,7 @@ export default function LoginPage() {
                     width: "90%",
                     maxWidth: "400px",
                     padding: "20px",
-                    minHeight: "300px", // Adjust the height of the blurred window
+                    minHeight: "300px",
                 }}
             >
                 <Typography style={{color: "aquamarine", fontWeight: "bold"}} variant="h5" gutterBottom>
@@ -95,6 +95,7 @@ export default function LoginPage() {
                         onChange={handlePasswordChange}
                         {...textFieldProps}
                     />
+                    {errorMessage && <Typography style={{color: "#13e51d"}}>{errorMessage}</Typography>}
                     <Button
                         style={{backgroundColor: "aquamarine", color: "black", width: "100%"}}
                         type="submit"

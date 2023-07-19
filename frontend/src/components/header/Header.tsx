@@ -14,6 +14,10 @@ export default function Header() {
         navigate("/login");
     }
 
+    function onClickLogoutHandler() {
+        navigate("/login");
+    }
+
     return (
         <AppBar position="static">
             <Toolbar className="Toolbar">
@@ -33,6 +37,13 @@ export default function Header() {
                             style={{height: '50%', backgroundColor: 'floralwhite ', color: 'black'}}
                             variant="contained">
                         Sign Up
+                    </Button>
+                </div>
+                <div>
+                    <Button onClick={onClickLogoutHandler}
+                            style={{height: '50%', backgroundColor: '#d22e2e', color: 'black'}}
+                            variant="contained">
+                        Sign Out
                     </Button>
                 </div>
             </Toolbar>
