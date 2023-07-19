@@ -47,6 +47,7 @@ jobs:
     needs: build-backend
     environment:
       name: production-fly.io
+      url: https://foodspotters.fly.dev/
     env:
       FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
     steps:
