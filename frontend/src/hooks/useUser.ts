@@ -53,8 +53,11 @@ export default function useUser() {
         }
     };
 
+// eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
+        // react-hooks/exhaustive-deps
         getUsername();
+        // eslint-disable-next-line
     }, []);
 
     const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
