@@ -39,7 +39,7 @@ export default function useUser() {
         setUser(undefined);
         navigator("/login");
     };
-
+    // eslint-disable-next-line
     const getUsername = async () => {
         try {
             const response = await axios.get("/user/me");
@@ -53,7 +53,6 @@ export default function useUser() {
         }
     };
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         getUsername();
     }, []);
