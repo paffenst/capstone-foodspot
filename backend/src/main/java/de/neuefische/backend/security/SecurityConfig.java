@@ -10,14 +10,15 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 
 
 @EnableWebSecurity
 @Configuration
-public class SecurityConfig {
-
+public class SecurityConfig extends AbstractSecurityWebApplicationInitializer {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
@@ -46,6 +47,13 @@ public class SecurityConfig {
                     auth.requestMatchers("api/food-spots/**").authenticated();
                     auth.requestMatchers("/").authenticated();
                     auth.anyRequest().permitAll();
-                }).build();
+                })
+                .logout(logout -> logout
+                        .logoutUrl("/user/logout")
+                        .clearAuthentication(true)
+                        .invalidateHttpSession(true)
+                        .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))
+                        .permitAll())
+                .build();
     }
 }

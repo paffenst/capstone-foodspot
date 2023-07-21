@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,7 +28,7 @@ class UserControllerIntegrationTest {
     @DirtiesContext
     @WithMockUser()
     void registerUser() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/user/register")
+        mockMvc.perform(post("/user/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 """
@@ -44,7 +45,7 @@ class UserControllerIntegrationTest {
     @DirtiesContext
     @WithMockUser(username = "test", password = "testpass")
     void loginUser_thenReturnStatus200() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/user/login")
+        mockMvc.perform(post("/user/login")
                         .with(csrf()))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("test"));
@@ -54,7 +55,7 @@ class UserControllerIntegrationTest {
     @DirtiesContext
     @WithMockUser()
     void userLogin_returnStatus200() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/user/register")
+        mockMvc.perform(post("/user/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(
                                 """
@@ -66,7 +67,7 @@ class UserControllerIntegrationTest {
                         ).with(csrf()))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/user/login")
+        mockMvc.perform(post("/user/login")
                         .with(csrf()))
                 .andExpect(status().isOk());
     }
@@ -85,7 +86,7 @@ class UserControllerIntegrationTest {
         ObjectMapper objectMapper = new ObjectMapper();
         String jsonRequestBody = objectMapper.writeValueAsString(newUser);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/user/register")
+        mockMvc.perform(post("/user/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequestBody)
                         .with(csrf()))
@@ -107,5 +108,12 @@ class UserControllerIntegrationTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/user/me"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("testuser"));
+    }
+
+    @WithMockUser
+    @Test
+    void logout_expect_200() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/user/logout").with(csrf()))
+                .andExpect(status().isOk());
     }
 }
