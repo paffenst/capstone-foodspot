@@ -1,8 +1,16 @@
-import axios, {AxiosError} from "axios";
+import axios, {AxiosError, AxiosResponse} from "axios";
 import {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {User} from "../models/User";
 
 export default function useUser() {
+    const initialUser = {
+        username: "anonymousUser",
+        password: "",
+        email: "",
+        firstname: "",
+        lastname: "",
+    }
     const [user, setUser] = useState<string | undefined>();
     const [inputFields, setInputFields] = useState({
         username: "",
@@ -10,6 +18,7 @@ export default function useUser() {
     });
     const navigator = useNavigate();
     const [errorMessage, setErrorMessage] = useState("");
+    const [loggedInUser, setLoggedInUser] = useState<User>(initialUser)
 
     const loginUser = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -35,10 +44,16 @@ export default function useUser() {
         }
     };
 
-    const logout = () => {
-        setUser(undefined);
-        navigator("/login");
-    };
+    function logoutUser(): Promise<AxiosResponse> {
+        return axios.post("/user/logout")
+    }
+
+    function logout(): Promise<void> {
+        return logoutUser()
+            .then(() => setLoggedInUser(initialUser))
+            .catch(console.error)
+    }
+
     // eslint-disable-next-line
     const getUsername = async () => {
         try {

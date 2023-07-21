@@ -25,8 +25,14 @@ public class UserController {
                 .getAuthentication()
                 .getName();
     }
+
     @GetMapping("/me")
     public String getUsername() {
         return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    @PostMapping("/logout")
+    public void logout() {
+        //handled by Spring Security
     }
 }
