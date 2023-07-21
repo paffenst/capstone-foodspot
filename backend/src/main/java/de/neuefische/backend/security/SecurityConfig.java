@@ -1,6 +1,5 @@
 package de.neuefische.backend.security;
 
-import jakarta.servlet.ServletContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,18 +14,11 @@ import org.springframework.security.web.authentication.logout.HttpStatusReturnin
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
-import org.springframework.web.multipart.support.MultipartFilter;
 
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends AbstractSecurityWebApplicationInitializer {
-
-    @Override
-    protected void beforeSpringSecurityFilterChain(ServletContext servletContext) {
-        insertFilters(servletContext, new MultipartFilter());
-    }
-
     @Bean
     public PasswordEncoder passwordEncoder() {
         return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();
