@@ -11,12 +11,12 @@ import useUser from "./hooks/useUser";
 export default function App() {
     const {token} = useAccessToken();
     const {addFoodSpot} = useAddFoodSpot();
-    const {user} = useUser();
+    const {user, loggedInUser, loginUser} = useUser();
 
     return (
         <div>
             <Routes>
-                <Route path="/login" element={<LoginPage/>}/>
+                <Route path="/login" element={<LoginPage loggedInUser={loggedInUser} handleLoginRequest={loginUser}/>}/>
                 <Route path="/register" element={<RegisterPage/>}/>
                 <Route
                     path="/"
