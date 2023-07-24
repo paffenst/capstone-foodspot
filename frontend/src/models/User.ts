@@ -5,3 +5,7 @@ export type User = {
     firstname: string
     lastname: string
 }
+export type UserLoginRequest = {
+    username: string,
+    password: string
+}

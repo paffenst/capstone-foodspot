@@ -3,14 +3,23 @@ import useUser from "../../hooks/useUser";
 import backgroundImage from "../../images/logformpage.jpg";
 import {FormEvent} from "react";
 import {useNavigate} from "react-router-dom";
+import {User, UserLoginRequest} from "../../models/User";
 
-export default function LoginPage() {
-    const {loginUser, handleUsernameChange, handlePasswordChange, inputFields, errorMessage} = useUser();
+type LoginProps = {
+    handleLoginRequest(event: UserLoginRequest): void
+    loggedInUser: User
+}
+export default function LoginPage(props: LoginProps) {
+
+    const {handleUsernameChange, handlePasswordChange, inputFields, errorMessage} = useUser();
     const navigator = useNavigate();
-
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        loginUser(event);
+        const userLoginRequest: UserLoginRequest = {
+            username: inputFields.username,
+            password: inputFields.password,
+        };
+        props.handleLoginRequest(userLoginRequest);
     };
 
     function onClickRegisterHandler() {
@@ -95,7 +104,9 @@ export default function LoginPage() {
                         onChange={handlePasswordChange}
                         {...textFieldProps}
                     />
-                    {errorMessage && <Typography style={{color: "#13e51d"}}>{errorMessage}</Typography>}
+                    {errorMessage && (
+                        <Typography style={{color: "#13e51d"}}>{errorMessage}</Typography>
+                    )}
                     <Button
                         style={{backgroundColor: "aquamarine", color: "black", width: "100%"}}
                         type="submit"

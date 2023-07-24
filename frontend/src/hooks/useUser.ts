@@ -1,7 +1,7 @@
 import axios, {AxiosError, AxiosResponse} from "axios";
-import {ChangeEvent, FormEvent, useEffect, useState} from "react";
+import {ChangeEvent, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {User} from "../models/User";
+import {User, UserLoginRequest} from "../models/User";
 
 export default function useUser() {
     const initialUser = {
@@ -17,12 +17,10 @@ export default function useUser() {
         password: "",
     });
     const navigator = useNavigate();
-    const [errorMessage, setErrorMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState<string>("");
     const [loggedInUser, setLoggedInUser] = useState<User>(initialUser)
-
-    const loginUser = async (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const {username, password} = inputFields;
+    const loginUser = async (userLoginRequest: UserLoginRequest): Promise<void> => {
+        const {username, password} = userLoginRequest;
         try {
             const response = await axios.post("/user/login", undefined, {
                 auth: {username, password},
@@ -31,10 +29,12 @@ export default function useUser() {
             setErrorMessage("");
             navigator("/");
         } catch (error) {
+            console.log("Axios Error:", error);
             if (axios.isAxiosError(error)) {
-                const axiosError = error as AxiosError;
+                const axiosError = error as AxiosError<any>;
                 if (axiosError.response?.status === 401) {
-                    setErrorMessage("username or password is incorrect !");
+                    const errorMessage = axiosError.response?.data?.error || "Username or password is incorrect!";
+                    console.log("Error Message:", errorMessage);
                 } else {
                     setErrorMessage("An error has occurred. Please try again.");
                 }
@@ -85,8 +85,9 @@ export default function useUser() {
 
     return {
         loginUser,
-        logout,
+        loggedInUser,
         user,
+        logout,
         getUsername,
         handleUsernameChange,
         handlePasswordChange,
