@@ -1,10 +1,12 @@
-# fly.toml app configuration file generated for foodspot on 2023-07-06T15:00:02+02:00
+# fly.toml app configuration file generated for foodspotters on 2023-08-11T14:43:20+02:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = "foodspotters"
 primary_region = "ams"
+
+[build]
 
 [http_service]
 internal_port = 8080
