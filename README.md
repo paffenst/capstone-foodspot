@@ -33,3 +33,9 @@ Enter the necessary connection details (mongodb://localhost:27017/).
 Click "Connect" to establish a connection.
 Click "Create Database" and choose the name for the database(foodspotDB).
 Click "Create Collection" and choose the name for the collection (foodspot and users)
+
+
+
+https://github.com/paffenst/capstone-foodspot/assets/20155754/24467781-b3ae-43ba-a533-1264b4333196
+
+
