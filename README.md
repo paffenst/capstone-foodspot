@@ -5,6 +5,10 @@ The application is intended for people with food intolerances-to quickly mark fo
 Common apps show general ratings,but don’t offer a reliable option to filter allergenfree foods.
 A dedicated app allows to find and mark the right spot faster and make it discoverable for other users with the same need.
 
+## Application-Demo
+
+https://github.com/paffenst/capstone-foodspot/assets/20155754/24467781-b3ae-43ba-a533-1264b4333196
+
 ## Technologies Used
 
 • React
@@ -33,9 +37,4 @@ Enter the necessary connection details (mongodb://localhost:27017/).
 Click "Connect" to establish a connection.
 Click "Create Database" and choose the name for the database(foodspotDB).
 Click "Create Collection" and choose the name for the collection (foodspot and users)
-
-
-
-https://github.com/paffenst/capstone-foodspot/assets/20155754/24467781-b3ae-43ba-a533-1264b4333196
-
 
