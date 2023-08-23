@@ -49,7 +49,7 @@ public class SecurityConfig extends AbstractSecurityWebApplicationInitializer {
                                         HttpStatus.UNAUTHORIZED.getReasonPhrase()
                                 )))
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers(request -> !request.getRequestURI().contains("/user") &&
+                    auth.requestMatchers(request -> !request.getRequestURI().contains("/api") &&
                             request.getMethod().matches(HttpMethod.GET.name())).permitAll();
                     auth.requestMatchers("/user/**").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/api/mapbox").permitAll();
