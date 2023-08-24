@@ -3,6 +3,7 @@ package de.neuefische.backend.controllers;
 import de.neuefische.backend.models.MongoUser;
 import de.neuefische.backend.models.UserDTO;
 import de.neuefische.backend.services.MongoUserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +33,9 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    public void logout() {
-        //handled by Spring Security
+    public String logout(HttpSession httpSession) {
+        httpSession.invalidate();
+        SecurityContextHolder.clearContext();
+        return "logged out";
     }
 }
