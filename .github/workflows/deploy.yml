@@ -1,10 +1,9 @@
-name: Deploy to fly.io
+name: Deploy
 
 on:
   push:
     branches:
       - main
-
 jobs:
   build-frontend:
     runs-on: ubuntu-latest
@@ -42,19 +41,3 @@ jobs:
         with:
           name: foodspotters.jar
           path: backend/target/foodspotters.jar
-  deploy-fly:
-    runs-on: ubuntu-latest
-    needs: build-backend
-    environment:
-      name: production-fly.io
-      url: https://foodspotters.fly.dev/
-    env:
-      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
-        with:
-          name: foodspotters.jar
-          path: backend/target
-      - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy
