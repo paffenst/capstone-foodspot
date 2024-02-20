@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://{paffenst}.github.io/{capstone-foodspot}",
+  "homepage": "https://paffenst.github.io/capstone-foodspot",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -57,6 +57,7 @@
   },
   "proxy": "http://localhost:8080",
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/react-modal": "^3.16.0",
     "gh-pages": "^6.1.1",
     "react-modal": "^3.16.0"
