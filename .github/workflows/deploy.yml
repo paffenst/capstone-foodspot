@@ -49,7 +49,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: app.jar
+          name: foodspotters.jar
           path: backend/target/foodspotters.jar
 
   push-to-docker-hub:
