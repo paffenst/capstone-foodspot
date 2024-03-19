@@ -64,6 +64,12 @@ jobs:
           name: foodspotters.jar
           path: backend/target
 
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -75,9 +81,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: push-to-docker-hub
     environment:
-      name: FoodSpotter
-      url: https://foodspotter.onrender.com
+      name: FoodSpotters
+      url: https://www.foodspotters.com
     steps:
-      - name: Trigger Render.com Deployment
+      - name: Render.com Deployment
         run: |
           curl -X POST ${{ secrets.RENDER_DEPLOY }}
