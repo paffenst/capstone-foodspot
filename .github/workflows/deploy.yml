@@ -82,7 +82,7 @@ jobs:
     needs: push-to-docker-hub
     environment:
       name: FoodSpotters
-      url: https://www.foodspotters.com
+      url: https://foodspotter.onrender.com
     steps:
       - name: Render.com Deployment
         run: |
