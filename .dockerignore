@@ -1,7 +1,7 @@
 # flyctl launch added from .gitignore
 **/*.iml
 **/.idea
-**/.vercel
+#**/.vercel
 
 # flyctl launch added from .idea/.gitignore
 # Default ignored files
@@ -15,7 +15,7 @@
 
 # flyctl launch added from backend/.gitignore
 backend/**/HELP.md
-backend/**/target
+#backend/**/target
 !backend/**/.mvn/wrapper/maven-wrapper.jar
 !backend/**/**/src/main/**/target
 !backend/**/**/src/test/**/target
@@ -48,9 +48,6 @@ backend/**/build
 ### VS Code ###
 backend/**/.vscode
 
-# flyctl launch added from frontend/.gitignore
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 frontend/node_modules
 frontend/.pnp
@@ -72,4 +69,3 @@ frontend/**/.env.production.local
 frontend/**/npm-debug.log*
 frontend/**/yarn-debug.log*
 frontend/**/yarn-error.log*
-fly.toml
