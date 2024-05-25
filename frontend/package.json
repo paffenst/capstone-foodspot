@@ -15,7 +15,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/mapbox-gl": "2.7.11",
-    "@types/node": "^16.18.35",
+    "@types/node": "^18.0.0",
     "@types/react": "^18.2.10",
     "@types/react-dom": "^18.2.4",
     "axios": "^1.4.0",
@@ -54,7 +54,6 @@
   },
   "proxy": "http://localhost:8080/",
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/react-modal": "^3.16.0",
     "react-modal": "^3.16.0"
   }
