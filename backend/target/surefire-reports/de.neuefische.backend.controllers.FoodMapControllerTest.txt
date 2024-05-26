@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: de.neuefische.backend.controllers.FoodMapControllerTest
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.832 s -- in de.neuefische.backend.controllers.FoodMapControllerTest
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.939 s -- in de.neuefische.backend.controllers.FoodMapControllerTest
