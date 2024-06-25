@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: de.neuefische.backend.controllers.UserControllerIntegrationTest
 -------------------------------------------------------------------------------
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.13 s -- in de.neuefische.backend.controllers.UserControllerIntegrationTest
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.609 s -- in de.neuefische.backend.controllers.UserControllerIntegrationTest
