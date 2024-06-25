@@ -2,7 +2,6 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://foodspotter.onrender.com",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
@@ -39,8 +38,7 @@
       "eslint:recommended",
       "plugin:react/recommended",
       "react-app",
-      "react-app/jest",
-      "next/core-web-vitals"
+      "react-app/jest"
     ]
   },
   "browserslist": {
