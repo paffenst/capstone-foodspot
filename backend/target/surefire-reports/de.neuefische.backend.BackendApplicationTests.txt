@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: de.neuefische.backend.BackendApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.148 s -- in de.neuefische.backend.BackendApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.52 s -- in de.neuefische.backend.BackendApplicationTests
