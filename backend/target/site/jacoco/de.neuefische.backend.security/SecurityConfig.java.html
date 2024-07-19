@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="de"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SecurityConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">capstone-foodspot-backend</a> &gt; <a href="index.source.html" class="el_package">de.neuefische.backend.security</a> &gt; <span class="el_source">SecurityConfig.java</span></div><h1>SecurityConfig.java</h1><pre class="source lang-java linenums">package de.neuefische.backend.security;
+
+import jakarta.servlet.ServletContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
+import org.springframework.web.multipart.support.MultipartFilter;
+
+
+@EnableWebSecurity
+@Configuration
+<span class="fc" id="L23">public class SecurityConfig extends AbstractSecurityWebApplicationInitializer {</span>
+    @Override
+    protected void beforeSpringSecurityFilterChain(ServletContext servletContext) {
+<span class="nc" id="L26">        insertFilters(servletContext, new MultipartFilter());</span>
+<span class="nc" id="L27">    }</span>
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+<span class="fc" id="L31">        return Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8();</span>
+    }
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+<span class="fc" id="L37">        CsrfTokenRequestAttributeHandler requestHandler = new CsrfTokenRequestAttributeHandler();</span>
+<span class="fc" id="L38">        requestHandler.setCsrfRequestAttributeName(null);</span>
+
+<span class="fc" id="L40">        return http</span>
+<span class="fc" id="L41">                .csrf(csrf -&gt; csrf</span>
+<span class="fc" id="L42">                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())</span>
+<span class="fc" id="L43">                        .csrfTokenRequestHandler(requestHandler))</span>
+<span class="fc" id="L44">                .sessionManagement(session -&gt; session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))</span>
+<span class="fc" id="L45">                .httpBasic(basic -&gt; basic.authenticationEntryPoint(</span>
+                        (request, response, authException) -&gt;
+<span class="nc" id="L47">                                response.sendError(</span>
+<span class="nc" id="L48">                                        HttpStatus.UNAUTHORIZED.value(),</span>
+<span class="nc" id="L49">                                        HttpStatus.UNAUTHORIZED.getReasonPhrase()</span>
+                                )))
+<span class="fc" id="L51">                .authorizeHttpRequests(auth -&gt; {</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">                    auth.requestMatchers(request -&gt; !request.getRequestURI().contains(&quot;/api&quot;) &amp;&amp;</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">                            request.getMethod().matches(HttpMethod.GET.name())).permitAll();</span>
+<span class="fc" id="L54">                    auth.requestMatchers(&quot;/user/**&quot;).permitAll();</span>
+<span class="fc" id="L55">                    auth.requestMatchers(HttpMethod.GET, &quot;/api/mapbox&quot;).permitAll();</span>
+<span class="fc" id="L56">                    auth.requestMatchers(&quot;api/food-spots/**&quot;).authenticated();</span>
+<span class="fc" id="L57">                    auth.requestMatchers(&quot;/&quot;).authenticated();</span>
+<span class="fc" id="L58">                    auth.anyRequest().permitAll();</span>
+<span class="fc" id="L59">                })</span>
+<span class="fc" id="L60">                .logout(logout -&gt; logout</span>
+<span class="fc" id="L61">                        .logoutUrl(&quot;/user/logout&quot;)</span>
+<span class="fc" id="L62">                        .clearAuthentication(true)</span>
+<span class="fc" id="L63">                        .invalidateHttpSession(true)</span>
+<span class="fc" id="L64">                        .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))</span>
+<span class="fc" id="L65">                        .permitAll())</span>
+<span class="fc" id="L66">                .build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
