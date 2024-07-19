@@ -26,6 +26,7 @@ export default function useUser() {
                 auth: {username, password},
             });
             setUser(response.data);
+            setLoggedInUser(response.data);
             setErrorMessage("");
             navigator("/");
         } catch (error) {
@@ -73,7 +74,7 @@ export default function useUser() {
         // react-hooks/exhaustive-deps
         getUsername();
         // eslint-disable-next-line
-    }, []);
+    }, [getUsername]);
 
     const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInputFields({...inputFields, username: event.target.value});

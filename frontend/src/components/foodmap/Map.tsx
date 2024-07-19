@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import mapboxgl, {LngLatLike} from 'mapbox-gl';
+import mapboxgl, {LngLatLike} from 'mapbox-gl/dist/mapbox-gl';
 import {Box} from '@mui/material';
 import {FoodSpot} from "../../models/FoodSpot";
 import {Foodlocation} from "../../models/Foodlocation";
@@ -18,7 +18,6 @@ export default function Map1(props: MapProps) {
     const [longitude, setLongitude] = useState(10.4515);
     const [latitude, setLatitude] = useState(51.1657);
     const [zoom, setZoom] = useState(5.7);
-
     useEffect(() => {
         if (props.token === "") return;
         if (props.centerMarker && map.current) {
