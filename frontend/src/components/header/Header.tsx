@@ -70,9 +70,6 @@ export default function Header() {
                     <NavLink to="/login">
                         <Logo src={foodspotterslogo} alt="Food-Spot-App Logo"/>
                     </NavLink>
-                    <ResponsiveTypography>
-                        Logged in as:
-                    </ResponsiveTypography>
                 </Box>
                 <ButtonContainer>
                     <ResponsiveButton
