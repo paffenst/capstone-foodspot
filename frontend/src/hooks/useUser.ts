@@ -1,4 +1,4 @@
-import axios, {AxiosError, AxiosResponse} from "axios";
+import axios, {AxiosError} from "axios";
 import {ChangeEvent, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {User, UserLoginRequest} from "../models/User";
@@ -45,17 +45,6 @@ export default function useUser() {
         }
     };
 
-    function logoutUser(): Promise<AxiosResponse> {
-        return axios.post("/user/logout")
-    }
-
-    function logout(): Promise<void> {
-        return logoutUser()
-            .then(() => setLoggedInUser(initialUser))
-            .catch(console.error)
-    }
-
-    // eslint-disable-next-line
     const getUsername = async () => {
         try {
             const response = await axios.get("/user/me");
@@ -71,10 +60,7 @@ export default function useUser() {
 
 // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
-        // react-hooks/exhaustive-deps
-        getUsername();
-        // eslint-disable-next-line
-    }, [getUsername]);
+    }, []);
 
     const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>) => {
         setInputFields({...inputFields, username: event.target.value});
@@ -88,7 +74,6 @@ export default function useUser() {
         loginUser,
         loggedInUser,
         user,
-        logout,
         getUsername,
         handleUsernameChange,
         handlePasswordChange,
