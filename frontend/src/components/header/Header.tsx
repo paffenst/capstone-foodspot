@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppBar, Box, Button, Toolbar, Typography} from '@mui/material';
+import {AppBar, Box, Button, Toolbar} from '@mui/material';
 import {styled} from '@mui/system';
 import foodspotterslogo from '../../images/FS_green_rounded_final_logo.png';
 import {NavLink, useNavigate} from 'react-router-dom';
@@ -19,15 +19,6 @@ const ResponsiveButton = styled(Button)(({theme}) => ({
         fontSize: '0.75rem',
         padding: '4px 6px',
         minWidth: 'fit-content',
-    },
-}));
-
-const ResponsiveTypography = styled(Typography)(({theme}) => ({
-    marginLeft: '10px',
-    color: 'white',
-    fontSize: '1rem',
-    [theme.breakpoints.down('sm')]: {
-        fontSize: '0.875rem',
     },
 }));
 
