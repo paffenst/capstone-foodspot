@@ -100,7 +100,7 @@ export default function LoginPage(props: LoginProps) {
                         label="password"
                         type="password"
                         id="passwordTextfield"
-                        autocomplete="on"
+                        autoComplete="on"
                         value={inputFields.password}
                         onChange={handlePasswordChange}
                         {...textFieldProps}
