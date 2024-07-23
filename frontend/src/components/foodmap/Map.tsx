@@ -1,9 +1,10 @@
 import React, {useEffect, useRef, useState} from 'react';
-import mapboxgl, {LngLatLike} from 'mapbox-gl/dist/mapbox-gl';
+import mapboxgl, {LngLatLike} from 'mapbox-gl';
 import {Box} from '@mui/material';
 import {FoodSpot} from "../../models/FoodSpot";
 import {Foodlocation} from "../../models/Foodlocation";
-import ".././foodmap/Map.css";
+import "./Map.css";
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 type MapProps = {
     token: string
@@ -39,6 +40,7 @@ export default function Map1(props: MapProps) {
                 enableHighAccuracy: true,
             }
         }));
+
 
         map.current.on('load', () => {
             map.current?.addLayer({
@@ -121,7 +123,6 @@ export default function Map1(props: MapProps) {
                                   </div>`)
                     const markerElement = document.createElement('div');
                     markerElement.className = 'custom-marker';
-
 
                     const lngLat: LngLatLike = [longitude, latitude];
                     new mapboxgl.Marker(markerElement)
