@@ -18,6 +18,7 @@ export default function Map1(props: MapProps) {
     const [longitude, setLongitude] = useState(10.4515);
     const [latitude, setLatitude] = useState(51.1657);
     const [zoom, setZoom] = useState(5.7);
+
     useEffect(() => {
         if (props.token === "") return;
         if (props.centerMarker && map.current) {
@@ -39,9 +40,51 @@ export default function Map1(props: MapProps) {
             }
         }));
 
+        map.current.on('load', () => {
+            map.current?.addLayer({
+                id: 'points-of-interest',
+                slot: 'middle',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://mapbox.mapbox-streets-v8'
+                },
+                'source-layer': 'poi_label',
+                type: 'circle'
+            });
+
+            map.current?.addLayer({
+                id: '3d-buildings',
+                source: 'composite',
+                'source-layer': 'building',
+                filter: ['==', 'extrude', 'true'],
+                type: 'fill-extrusion',
+                minzoom: 15,
+                paint: {
+                    'fill-extrusion-color': '#aaa',
+                    'fill-extrusion-height': [
+                        'interpolate',
+                        ['linear'],
+                        ['zoom'],
+                        15,
+                        0,
+                        15.05,
+                        ['get', 'height']
+                    ],
+                    'fill-extrusion-base': [
+                        'interpolate',
+                        ['linear'],
+                        ['zoom'],
+                        15,
+                        0,
+                        15.05,
+                        ['get', 'min_height']
+                    ],
+                    'fill-extrusion-opacity': 0.6
+                }
+            });
+        });
 
     }, [props.token, props.centerMarker, longitude, latitude, zoom]);
-
 
     useEffect(() => {
         if (!map.current) return;
