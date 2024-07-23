@@ -7,6 +7,7 @@ import Header from "./components/header/Header";
 import LoginPage from "./components/user/LoginPage";
 import RegisterPage from "./components/user/RegisterPage";
 import useUser from "./hooks/useUser";
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 export default function App() {
     const {token} = useAccessToken();
