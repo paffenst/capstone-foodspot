@@ -33,4 +33,12 @@ public class FoodSpotService {
     public FoodSpot getById(String id) {
         return foodSpotRepo.findById(id).orElseThrow(NoSuchFoodSpotException::new);
     }
+
+    public List<FoodSpot> searchByName(String query) {
+        return foodSpotRepo.findByNameContainingIgnoreCase(query);
+    }
+
+    public List<FoodSpot> searchByNameAndType(String query, String placeType) {
+        return foodSpotRepo.findByNameContainingIgnoreCaseAndPlaceType(query, placeType);
+    }
 }

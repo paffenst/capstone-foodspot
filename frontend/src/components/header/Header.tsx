@@ -1,5 +1,5 @@
-import React from 'react';
-import {AppBar, Box, Button, Toolbar} from '@mui/material';
+import React, {ChangeEvent, FormEvent, useState} from 'react';
+import {AppBar, Box, Button, TextField, Toolbar} from '@mui/material';
 import {styled} from '@mui/system';
 import foodspotterslogo from '../../images/FS_green_rounded_final_logo.png';
 import {NavLink, useNavigate} from 'react-router-dom';
@@ -40,7 +40,27 @@ const ButtonContainer = styled(Box)(({theme}) => ({
 }));
 
 export default function Header() {
+    const [searchTerm, setSearchTerm] = useState('');
     const navigate = useNavigate();
+
+    const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value);
+    };
+
+    const handleSearchSubmit = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (!searchTerm.trim()) return;
+
+        try {
+            const response = await fetch(`/api/places/search?query=${encodeURIComponent(searchTerm)}`);
+            const data = await response.json();
+            console.log('Search results:', data);
+            navigate(`/search-results?query=${searchTerm}`)
+        } catch (error) {
+            console.error('Search error:', error);
+        }
+    };
+
 
     function onClickRegisterHandler() {
         navigate('/register');
@@ -61,6 +81,24 @@ export default function Header() {
                     <NavLink to="/login">
                         <Logo src={foodspotterslogo} alt="Food-Spot-App Logo"/>
                     </NavLink>
+                </Box>
+                <Box component="form" onSubmit={handleSearchSubmit} sx={{display: 'flex', alignItems: 'center', mx: 2}}>
+                    <TextField
+                        variant="outlined"
+                        size="small"
+                        placeholder="Search places..."
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        sx={{
+                            backgroundColor: 'white',
+                            borderRadius: 1,
+                            minWidth: {xs: '120px', sm: '200px'},
+                            input: {padding: '6px 8px'}
+                        }}
+                    />
+                    <Button type="submit" variant="contained" sx={{ml: 1, backgroundColor: '#4caf50', color: 'white'}}>
+                        Search
+                    </Button>
                 </Box>
                 <ButtonContainer>
                     <ResponsiveButton

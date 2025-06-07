@@ -30,4 +30,19 @@ public class FoodSpotController {
     public ResponseEntity<FoodSpot> byId(@PathVariable String id) {
         return new ResponseEntity<>(foodSpotService.getById(id), HttpStatus.OK);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<FoodSpot>> searchFoodSpots(@RequestParam String query, @RequestParam(required = false) String placeType) {
+        List<FoodSpot> results;
+
+        if (placeType != null) {
+            results = foodSpotService.searchByNameAndType(query, placeType);
+        } else {
+            results = foodSpotService.searchByName(query);
+        }
+
+        return new ResponseEntity<>(results, HttpStatus.OK);
+    }
+
+
 }
